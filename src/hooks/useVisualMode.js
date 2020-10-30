@@ -19,7 +19,6 @@ const useVisualMode = function (initialMode) {
       const previousVal = newHistory.pop()
       setMode(previousVal)
       setHistory(newHistory) 
-    
     }
   }
   return { mode, transition , back}
