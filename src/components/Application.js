@@ -10,9 +10,18 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
+    appointments: {
+      "1": {
+        id: 1,
+        time: "12pm",
+        interview: null
+      }
+    },
+    interviewers: {}
   });
 
-  const setDay = day => setState({ ...state, day });
+  const setDay = day => setState({ ...state, day })
+  
   
   useEffect( () => {
     const first = axios.get('/api/days');
@@ -25,22 +34,65 @@ export default function Application(props) {
       third
     ]).then(all => {
        return setState(prev => ({...prev, days : all[0].data, appointments: all[1].data, interviewers : all[2].data}))
-    })},[])
-   
+    })
+    
+  },[])
+
   const appointments = getAppointmentsForDay(state,state.day);
   const interviewers = getInterviewersForDay(state,state.day);
+  
+  //-----------bookInterview---------
+  function bookInterview(id, interview) {
+    return axios.put(`/api/appointments/${id}`,{interview}).then(
+    () => {const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    }; 
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments })
+     })
+  }
+  
+  //-----------cancelInterview--------------
+  function cancelInterview(id, interview) {
+    return axios.delete(`/api/appointments/${id}`).then(() =>
+   
+    {const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    setState({
+      ...state,
+      appointments })}
+     
+    )
+  }
+
   const schedule = appointments.map((appointment) => {  
     
     const interview = getInterview(state, appointment.interview)
-  
+ 
     return (<Appointment 
       key={appointment.id} 
       id={appointment.id} 
       time={appointment.time} 
       interview={interview}
-      interviewers = {interviewers} />)
+      interviewers = {interviewers}
+      bookInterview = {bookInterview}
+      cancelInterview = {cancelInterview}
+      />)
   })
-// })
 
   return (
     <main className="layout">
