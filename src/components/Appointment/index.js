@@ -20,7 +20,7 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE"
 
 export default function Appointment (props) {
-  console.log(props)
+  // console.log(props)
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -43,15 +43,15 @@ export default function Appointment (props) {
     .then(() => transition(EMPTY))
     .catch(error => transition(ERROR_DELETE, true))
   }
-  // //----------edit-----------
-  // function edit (name, interviewer) {
-  //   const interview = {
-  //     student: name,
-  //     interviewer
-  //   };
-  //   transition(SAVING)
-  //   props.bookInterview(props.id, interview).then(() => transition(SHOW))
-  // }
+  //----------edit-----------
+  function edit (name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING)
+    props.bookInterview(props.id, interview).then(() => transition(SHOW))
+  }
   
   return (
     <article className="appointment" data-testid="appointment">
@@ -67,7 +67,7 @@ export default function Appointment (props) {
       )}
       
       {mode === CREATE && <Form  
-                            student={props.student}
+                            name={props.student}
                             interviewers = {props.interviewers}
                             onCancel={back}
                             onSave={save}
@@ -84,10 +84,10 @@ export default function Appointment (props) {
               />
       )}
       {mode === EDIT && (
-        <Form student={props.interview.student}
+        <Form name={props.interview.student}
               interviewer={props.interview.interviewer.id}
               interviewers={props.interviewers}
-              onSave={save}
+              onSave={edit}
               onCancel={back} />
       )}
       {mode === ERROR_DELETE && (
