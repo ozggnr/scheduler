@@ -23,9 +23,11 @@ export default function DayListItem(props) {
   }
 
   return (
-    <li className={dayClass} onClick={() => props.setDay(props.name)}>
+    <li data-testid="day"
+    className={dayClass} onClick={() => props.setDay(props.name)}>
       <div>{props.name}</div>
       <div>{spotCorrector(props)}</div>
+    
     </li>
   );
 }

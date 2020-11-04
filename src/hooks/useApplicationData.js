@@ -33,7 +33,7 @@ const useApplicationData = function () {
   },[])
 
     //-----------bookInterview---------
-    function bookInterview(id, interview) {
+    function bookInterview(id, interview, type) {
       
       return axios.put(`/api/appointments/${id}`,{interview}).then(
       () => {const appointment = {
@@ -44,7 +44,9 @@ const useApplicationData = function () {
         ...state.appointments,
         [id]: appointment
       };
-      spotsRemaining(id, "save")
+      if (type === "add") {
+        spotsRemaining(id, "save")
+      }
      
       setState({
         ...state,
@@ -56,8 +58,9 @@ const useApplicationData = function () {
     //-----------cancelInterview--------------
     function cancelInterview(id, interview) {
       return axios.delete(`/api/appointments/${id}`).then(() =>
-     
-      {const appointment = {
+      
+      { 
+        const appointment = {
         ...state.appointments[id],
         interview: null
       };
@@ -70,13 +73,11 @@ const useApplicationData = function () {
       setState({
         ...state,
         appointments })}
-       
       )
     }
     function spotsRemaining (id, type) {
-      return state.days.map((day) => {
+      return state.days.map( (day) => {
         if(day.appointments.includes(id) ){
-          // console.log("yes!", day.spots)
           if(type === "save"){
             day.spots--;
           } else if (type === "delete"){
@@ -85,9 +86,6 @@ const useApplicationData = function () {
         }
       }) 
       
-      // console.log("appointment id", id)
-      // console.log("spots", state.days)
-      // return setState({...state,days});
     }
     return { state, setDay, bookInterview, cancelInterview};
   }
