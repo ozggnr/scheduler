@@ -1,5 +1,5 @@
 # Interview Scheduler
-
+Interview Scheduler allows people book and manage interviews. With this application, appointments can be made noon to five for each day of the week.
 ## Setup
 
 Install dependencies with `npm install`.
