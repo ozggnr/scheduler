@@ -4,7 +4,6 @@ import "components/InterviewerList.scss";
 import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
-  
   let interviewers = props.interviewers.map(interviewer => {
     return (
       <InterviewerListItem
@@ -16,14 +15,14 @@ export default function InterviewerList(props) {
       />
     );
   });
-  
   return (<section className="interviewers">
-          <h4 className="interviewers__header text--light">Interviewer</h4>
-          <ul className="interviewers__list">{interviewers}</ul>
-          </section>)
-  
-}
+            <h4 className="interviewers__header text--light">Interviewer</h4>
+            <ul className="interviewers__list">{interviewers}</ul>
+          </section>
+            )
+};
 
+//checking prop types, they should be an array
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
 };

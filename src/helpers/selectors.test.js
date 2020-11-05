@@ -138,7 +138,6 @@ test("getInterviewersForDay returns an array containing the correct interviewer 
   expect(first).toEqual(state.interviewers["1"]);
   expect(second).toEqual(state.interviewers["2"]);
   expect(third).toEqual(state.interviewers["7"]);
-
 });
 
 test("getInterviewersForDay returns an empty array when the days data is empty", () => {

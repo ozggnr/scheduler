@@ -1,5 +1,4 @@
 import React from "react";
-
 import DayList from "components/DayList";
 import "components/Application.scss";
 import Appointment from "components/Appointment";
@@ -13,12 +12,8 @@ export default function Application(props) {
     bookInterview,
     cancelInterview
   } = useApplicationData();
-
-
   const interviewers = getInterviewersForDay(state,state.day);
-  
   const appointments = getAppointmentsForDay(state,state.day).map((appointment) => {  
-    
     return (
     <Appointment 
       key={appointment.id} 
@@ -30,7 +25,6 @@ export default function Application(props) {
       cancelInterview = {cancelInterview}
       />)
   })
-
   return (
     <main className="layout">
       <section className="sidebar">

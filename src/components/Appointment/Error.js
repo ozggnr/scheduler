@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export default function Header (props) {
   return (
     <main className="appointment__card appointment__card--error">
@@ -16,4 +15,4 @@ export default function Header (props) {
   />
   </main>
   )
-}
+};

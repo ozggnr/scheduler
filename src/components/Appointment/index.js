@@ -20,11 +20,10 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE"
 
 export default function Appointment (props) {
-  // console.log(props)
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-  //------save------
+  //This function is used for saving an interview with a student name and interviewer
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -34,16 +33,15 @@ export default function Appointment (props) {
     props.bookInterview(props.id, interview, "add")
     .then(()=> transition(SHOW))
     .catch(error => transition(ERROR_SAVE, true));
-     
-  }
-  //---------delete--------
+  };
+  //This function is used for deleting an interview 
   function deleteInterview (id) {
     transition(DELETING, true);
     props.cancelInterview(props.id)
     .then(() => transition(EMPTY))
     .catch(error => transition(ERROR_DELETE, true))
-  }
-  //----------edit-----------
+  };
+  ////This function is used for editing the existing interview and save with a new student or interviewer
   function edit (name, interviewer) {
     const interview = {
       student: name,
@@ -51,11 +49,9 @@ export default function Appointment (props) {
     };
     transition(SAVING)
     props.bookInterview(props.id, interview).then(() => transition(SHOW))
-  }
-  
+  };
   return (
     <article className="appointment" data-testid="appointment">
-       
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => { transition(CREATE)}} />}
       {mode === SHOW && props.interview && (<Show
@@ -98,7 +94,6 @@ export default function Appointment (props) {
         <Error message = "There is an error!"
                 onClose={back} />
       )}
-     
     </article>
   )
-}
+};

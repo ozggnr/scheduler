@@ -1,9 +1,8 @@
 import { useState } from 'react';
-
+//This function is used for tracking transition between the components 
 const useVisualMode = function (initialMode) {
   const [mode, setMode] = useState(initialMode);
   const [history, setHistory] = useState([initialMode]); 
-  
   function transition(newMode, replace=false) {
     setHistory([...history, mode]);
     setMode(newMode);
@@ -12,7 +11,6 @@ const useVisualMode = function (initialMode) {
       setHistory(hist)
     }
   }
-
   function back ( ) {
     if (history.length >= 1) {
       const newHistory = [...history]

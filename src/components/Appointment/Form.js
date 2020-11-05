@@ -3,16 +3,15 @@ import InterviewerList from 'components/InterviewerList';
 import Button from 'components/Button';
 
 export default function Form(props) {
-  
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
+  //To check edge case, user has to provide a student name
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
       return;
     }
-  
     setError("");
     props.onSave(name, interviewer);
   }
@@ -44,6 +43,7 @@ export default function Form(props) {
       </section>
     </main>
   )
+  
   function reset() {
     setName("");
     setInterviewer(null);
