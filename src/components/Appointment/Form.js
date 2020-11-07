@@ -6,15 +6,20 @@ export default function Form(props) {
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
-  //To check edge case, user has to provide a student name
+  //To check edge case, user has to provide a student name and interviewer
   function validate() {
-    if (name === "") {
+    if (name === "" ) {
       setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null) {
+      setError("You should choose an interviewer");
       return;
     }
     setError("");
     props.onSave(name, interviewer);
   }
+  
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
